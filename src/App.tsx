@@ -185,23 +185,31 @@ export default function App() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: "العود الطبيعي", type: "تراد، مروكي، كلمنتان", img: "https://cdn.salla.sa/PdQKdV/595c1da1-7f03-4006-8139-50f6a33f1af4-1000x1000-yBhhhrIgUcz74SN0jfZ2NqZQGb3WEGOpf2m9Y7fW.jpg" },
-              { title: "العود المحسن", type: "سوبر، دبل سوبر، ملكي", img: "https://cdn.salla.sa/BwpVR/5b5e4161-19e4-4fdf-893a-fdf1699a610a-1000x730.88685015291-XfLnppavMu6AkTf7V2ZaX6ewnIeqdwSDLkE210rN.png" },
-              { title: "أدهان العود", type: "بيور، معتق، خلطات خاصة", img: "https://media.zid.store/cf6ba7d9-275c-4d2f-8fdb-3834401a5e3f/002249b1-650c-4d27-88ca-1451e1c1c63e.jpg" }
+              { title: "العود الطبيعي", type: "تراد، مروكي، كلمنتان", img: "https://cdn.salla.sa/PdQKdV/595c1da1-7f03-4006-8139-50f6a33f1af4-1000x1000-yBhhhrIgUcz74SN0jfZ2NqZQGb3WEGOpf2m9Y7fW.jpg", outOfStock: true },
+              { title: "العود المحسن", type: "سوبر، دبل سوبر، ملكي", img: "https://cdn.salla.sa/BwpVR/5b5e4161-19e4-4fdf-893a-fdf1699a610a-1000x730.88685015291-XfLnppavMu6AkTf7V2ZaX6ewnIeqdwSDLkE210rN.png", outOfStock: true },
+              { title: "أدهان العود", type: "بيور، معتق، خلطات خاصة", img: "https://media.zid.store/cf6ba7d9-275c-4d2f-8fdb-3834401a5e3f/002249b1-650c-4d27-88ca-1451e1c1c63e.jpg", outOfStock: false }
             ].map((product, i) => (
               <motion.div 
                 key={i}
-                whileHover={{ y: -10 }}
-                className="relative group cursor-pointer"
+                whileHover={product.outOfStock ? {} : { y: -10 }}
+                className={`relative group ${product.outOfStock ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'}`}
               >
                 <div className="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl">
                   <img 
                     src={product.img} 
                     alt={product.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className={`w-full h-full object-cover transition-transform duration-700 ${product.outOfStock ? 'grayscale' : 'group-hover:scale-110'}`}
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/90 via-transparent to-transparent" />
+                  
+                  {product.outOfStock && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-red-600/90 text-white px-6 py-2 rounded-full font-bold text-lg rotate-[-10deg] shadow-xl border-2 border-white/20">
+                        نفذت الكمية حاليا
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="absolute bottom-8 right-8 left-8 text-white">
                   <h3 className="text-2xl font-serif font-bold mb-2">{product.title}</h3>

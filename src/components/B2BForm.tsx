@@ -6,11 +6,23 @@ type FormData = {
   name: string;
   company: string;
   email: string;
+  countryCode: string;
   phone: string;
   businessType: string;
   monthlyVolume: string;
   interests: string[];
 };
+
+const countries = [
+  { code: '+966', name: 'السعودية', flag: '🇸🇦' },
+  { code: '+971', name: 'الإمارات', flag: '🇦🇪' },
+  { code: '+965', name: 'الكويت', flag: '🇰🇼' },
+  { code: '+974', name: 'قطر', flag: '🇶🇦' },
+  { code: '+968', name: 'عمان', flag: '🇴🇲' },
+  { code: '+973', name: 'البحرين', flag: '🇧🇭' },
+  { code: '+20', name: 'مصر', flag: '🇪🇬' },
+  { code: '+962', name: 'الأردن', flag: '🇯🇴' },
+];
 
 export default function B2BForm() {
   const [step, setStep] = useState(1);
@@ -19,6 +31,7 @@ export default function B2BForm() {
     name: '',
     company: '',
     email: '',
+    countryCode: '+966',
     phone: '',
     businessType: '',
     monthlyVolume: '',
@@ -29,11 +42,9 @@ export default function B2BForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validatePhone = (phone: string) => {
-    // Regex for GCC countries (KSA, UAE, Kuwait, Qatar, Oman, Bahrain)
-    // Supports international format with + or local format
+    // Basic validation for numbers after country code
     const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
-    const gccRegex = /^(?:\+?(?:966|971|965|974|968|973)|0)?\d{8,9}$/;
-    return gccRegex.test(cleanPhone);
+    return cleanPhone.length >= 8 && cleanPhone.length <= 11;
   };
 
   const handleNext = () => {
@@ -50,7 +61,7 @@ export default function B2BForm() {
         return;
       }
       if (!validatePhone(formData.phone)) {
-        setError('يرجى إدخال رقم هاتف صحيح من دول الخليج (مثال: +966XXXXXXXXX)');
+        setError('يرجى إدخال رقم هاتف صحيح (مثال: 5XXXXXXXX)');
         return;
       }
     }
@@ -68,7 +79,7 @@ export default function B2BForm() {
 
     // Final validation
     if (!validatePhone(formData.phone)) {
-      setError('يرجى إدخال رقم هاتف صحيح من دول الخليج');
+      setError('يرجى إدخال رقم هاتف صحيح');
       setStep(2);
       return;
     }
@@ -103,7 +114,14 @@ export default function B2BForm() {
   };
 
   const updateField = (field: keyof FormData, value: any) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    let finalValue = value;
+    
+    // Auto-convert Eastern Arabic numerals (١٢٣) to Western Arabic (123) for phone
+    if (field === 'phone' && typeof value === 'string') {
+      finalValue = value.replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
+    }
+    
+    setFormData((prev) => ({ ...prev, [field]: finalValue }));
   };
 
   const toggleInterest = (interest: string) => {
@@ -180,6 +198,8 @@ export default function B2BForm() {
                 <input
                   required
                   type="text"
+                  name="name"
+                  autoComplete="name"
                   value={formData.name}
                   onChange={(e) => updateField('name', e.target.value)}
                   className="w-full p-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all"
@@ -191,6 +211,8 @@ export default function B2BForm() {
                 <input
                   required
                   type="text"
+                  name="organization"
+                  autoComplete="organization"
                   value={formData.company}
                   onChange={(e) => updateField('company', e.target.value)}
                   className="w-full p-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all"
@@ -222,6 +244,8 @@ export default function B2BForm() {
                 <input
                   required
                   type="email"
+                  name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={(e) => updateField('email', e.target.value)}
                   className="w-full p-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all"
@@ -230,15 +254,31 @@ export default function B2BForm() {
               </div>
               <div>
                 <label className="block text-sm font-bold mb-2">رقم التواصل (واتساب)</label>
-                <input
-                  required
-                  type="tel"
-                  value={formData.phone}
-                  onChange={(e) => updateField('phone', e.target.value)}
-                  className="w-full p-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all text-left"
-                  dir="ltr"
-                  placeholder="+966 5X XXX XXXX"
-                />
+                <div className="flex gap-2">
+                  <select
+                    value={formData.countryCode}
+                    onChange={(e) => updateField('countryCode', e.target.value)}
+                    className="w-32 p-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all bg-white font-bold text-sm"
+                    dir="ltr"
+                  >
+                    {countries.map((c) => (
+                      <option key={c.code} value={c.code}>
+                        {c.flag} {c.code}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    required
+                    type="tel"
+                    name="tel"
+                    autoComplete="tel"
+                    value={formData.phone}
+                    onChange={(e) => updateField('phone', e.target.value)}
+                    className="flex-1 p-4 rounded-xl border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all text-left"
+                    dir="ltr"
+                    placeholder="5X XXX XXXX"
+                  />
+                </div>
               </div>
               <div className="flex justify-between">
                 <button
@@ -270,7 +310,7 @@ export default function B2BForm() {
               <div>
                 <label className="block text-sm font-bold mb-4">نوع النشاط التجاري</label>
                 <div className="grid grid-cols-2 gap-3">
-                  {['متجر إلكتروني', 'محل تجزئة', 'شركة هدايا', 'موزع جملة'].map((type) => (
+                  {['متجر إلكتروني', 'محل تجزئة', 'عميل عادي', 'موزع جملة'].map((type) => (
                     <button
                       key={type}
                       type="button"
@@ -295,28 +335,39 @@ export default function B2BForm() {
                   className="w-full p-4 rounded-xl border border-gray-200 focus:border-gold outline-none bg-white font-bold"
                 >
                   <option value="">اختر الحجم...</option>
-                  <option value="less_5kg">أقل من 5 كجم</option>
-                  <option value="5_20kg">5 - 20 كجم</option>
-                  <option value="20_50kg">20 - 50 كجم</option>
-                  <option value="more_50kg">أكثر من 50 كجم</option>
+                  <option value="أقل من 5 كجم (خشب) / 10 تولات (دهن)">أقل من 5 كجم (خشب) / 10 تولات (دهن)</option>
+                  <option value="5 - 20 كجم (خشب) / 10 - 50 تولة (دهن)">5 - 20 كجم (خشب) / 10 - 50 تولة (دهن)</option>
+                  <option value="20 - 50 كجم (خشب) / 50 - 100 تولة (دهن)">20 - 50 كجم (خشب) / 50 - 100 تولة (دهن)</option>
+                  <option value="أكثر من 50 كجم (خشب) / أكثر من 100 تولة (دهن)">أكثر من 50 كجم (خشب) / أكثر من 100 تولة (دهن)</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-bold mb-4">المنتجات المهتم بها</label>
                 <div className="flex flex-wrap gap-2">
-                  {['عود طبيعي', 'عود محسن', 'دهن عود', 'مباخر هدايا'].map((interest) => (
+                  {[
+                    { name: 'عود طبيعي', outOfStock: true },
+                    { name: 'عود محسن', outOfStock: true },
+                    { name: 'دهن عود', outOfStock: false },
+                    { name: 'مباخر هدايا', outOfStock: false }
+                  ].map((product) => (
                     <button
-                      key={interest}
+                      key={product.name}
                       type="button"
-                      onClick={() => toggleInterest(interest)}
-                      className={`px-4 py-2 rounded-full border text-xs font-bold transition-all ${
-                        formData.interests.includes(interest)
+                      disabled={product.outOfStock}
+                      onClick={() => toggleInterest(product.name)}
+                      className={`px-4 py-2 rounded-full border text-xs font-bold transition-all relative ${
+                        product.outOfStock
+                        ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed'
+                        : formData.interests.includes(product.name)
                         ? 'border-gold bg-gold text-white'
                         : 'border-gray-200 hover:border-gold/50'
                       }`}
                     >
-                      {interest}
+                      {product.name}
+                      {product.outOfStock && (
+                        <span className="block text-[8px] text-red-500 mt-0.5">نفذت الكمية</span>
+                      )}
                     </button>
                   ))}
                 </div>

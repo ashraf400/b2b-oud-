@@ -18,25 +18,33 @@ async function startServer() {
   // API Route for Form Submission
   app.post("/api/submit-form", async (req, res) => {
     try {
-      const formData = req.body;
-      console.log("Form Data Received:", formData);
+      const { name, company, email, countryCode, phone, businessType, monthlyVolume, interests } = req.body;
+      
+      const payload = {
+        name,
+        company,
+        email,
+        phone: `'${countryCode} ${phone}`, // Added a single quote to force Google Sheets to treat it as text
+        businessType,
+        monthlyVolume,
+        interests // Sending as array to match your Apps Script .join(", ") logic
+      };
 
-      // LINK WITH SHEET: 
-      // In a real production scenario, you would use the Google Sheets API 
-      // or a webhook URL (like Zapier or Make.com) to send this data to a sheet.
+      console.log("إرسال البيانات إلى الشيت:", payload);
+
       const sheetWebhookUrl = process.env.SHEET_WEBHOOK_URL;
       
       if (sheetWebhookUrl) {
         await fetch(sheetWebhookUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(payload),
         });
       }
 
       res.status(200).json({ 
         success: true, 
-        message: "تم استلام طلبك بنجاح وسيتم التواصل معك قريباً." 
+        message: "تم استلام طلبك بنجاح." 
       });
     } catch (error) {
       console.error("Error submitting form:", error);
