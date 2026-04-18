@@ -10,6 +10,7 @@ import {
   Globe,
   Zap
 } from 'lucide-react';
+import Logo from './components/Logo';
 import B2BForm from './components/B2BForm';
 import FloatingActions from './components/FloatingActions';
 import PrivacyPolicy from './components/PrivacyPolicy';
@@ -50,10 +51,10 @@ export default function App() {
       <nav className="fixed top-0 left-0 right-0 z-40 glass">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 gold-gradient rounded-xl flex items-center justify-center text-white font-serif text-3xl font-bold shadow-lg shadow-gold/20 border border-white/20">ع</div>
+            <Logo className="w-12 h-12" />
             <div className="flex flex-col">
-              <span className="text-xl font-serif font-bold tracking-tight leading-none">عود برستيج</span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">OUD PRESTIGE B2B</span>
+              <span className="text-xl font-serif font-bold tracking-tight leading-none">مورد الطيب</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">MAWRID AL TEEB WHOLESALE</span>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-widest">
@@ -79,11 +80,11 @@ export default function App() {
               <Star className="w-3 h-3 fill-gold" /> شريكك الموثوق في تجارة العود بالجملة
             </div>
             <h1 className="text-5xl md:text-7xl font-serif font-bold leading-[1.1] mb-8">
-              فخامة العود <br /> 
-              <span className="text-gold italic">لأعمالك التجارية</span>
+              نخب أول من <br /> 
+              <span className="text-gold italic">العود ودهن العود</span>
             </h1>
             <p className="text-lg text-gray-600 mb-10 max-w-lg leading-relaxed">
-              نحن نوفر أجود أنواع العود الطبيعي والمحسن ودهن العود مباشرة من المصادر في جنوب شرق آسيا إلى مستودعاتك في الخليج. حلول متكاملة لتجار التجزئة والشركات.
+              نحن مؤسسة سعودية متخصصة في توريد أجود أنواع العود الطبيعي والمحسن مباشرة من المصادر العالمية إلى تجار الجملة والمحلات في المملكة والخليج.
             </p>
             <div className="flex flex-wrap gap-4">
               <a href="#contact" className="bg-luxury-black text-white px-10 py-4 rounded-xl font-bold flex items-center gap-2 hover:bg-gold transition-all shadow-xl shadow-black/10">
@@ -141,7 +142,7 @@ export default function App() {
       <section id="about" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-4xl font-serif font-bold mb-6">لماذا تختار عود برستيج لأعمالك؟</h2>
+            <h2 className="text-4xl font-serif font-bold mb-6">لماذا تختار مورد الطيب لأعمالك؟</h2>
             <p className="text-gray-600">نحن نفهم احتياجات السوق الخليجي ونوفر حلولاً مخصصة تضمن لك الربحية والتميز.</p>
           </div>
 
@@ -185,7 +186,7 @@ export default function App() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { title: "العود الطبيعي", type: "تراد، مروكي، كلمنتان", img: "https://cdn.salla.sa/PdQKdV/595c1da1-7f03-4006-8139-50f6a33f1af4-1000x1000-yBhhhrIgUcz74SN0jfZ2NqZQGb3WEGOpf2m9Y7fW.jpg" },
-              { title: "العود المحسن", type: "سوبر، دبل سوبر، ملكي", img: "https://images.unsplash.com/photo-1519669011783-4eaa93fa1b7d?auto=format&fit=crop&w=800&q=80" },
+              { title: "العود المحسن", type: "سوبر، دبل سوبر، ملكي", img: "https://cdn.salla.sa/BwpVR/5b5e4161-19e4-4fdf-893a-fdf1699a610a-1000x730.88685015291-XfLnppavMu6AkTf7V2ZaX6ewnIeqdwSDLkE210rN.png" },
               { title: "أدهان العود", type: "بيور، معتق، خلطات خاصة", img: "https://media.zid.store/cf6ba7d9-275c-4d2f-8fdb-3834401a5e3f/002249b1-650c-4d27-88ca-1451e1c1c63e.jpg" }
             ].map((product, i) => (
               <motion.div 
@@ -254,9 +255,9 @@ export default function App() {
                     </div>
                   </div>
                   <img 
-                    src="https://images.unsplash.com/photo-1615485240384-552e400e9c24?auto=format&fit=crop&w=1200&q=80" 
-                    alt="B2B Business Process" 
-                    className="rounded-2xl shadow-lg mt-8"
+                    src="https://cdn.salla.sa/Devw/nM9JWrgrj3oC6GEpnFioxAKdsqIwdGuPkfoT9ZzV.jpg" 
+                    alt="B2B Wholesale Business" 
+                    className="rounded-2xl shadow-lg mt-8 w-full h-64 object-cover"
                     referrerPolicy="no-referrer"
                   />
                 </div>
@@ -282,25 +283,25 @@ export default function App() {
           >
             {[
               {
-                quote: "الجودة ثابتة في كل دفعة نطلبها، وهذا ما يجعلنا نعتمد عليهم كمورد أساسي لسلسلة متاجرنا.",
-                name: "أحمد المنصور",
-                role: "مدير المشتريات",
-                company: "شركة العطور الفاخرة",
-                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80"
+                quote: "الجودة ثابتة في كل دفعة نطلبها، وهذا ما يجعلنا نعتمد عليهم كمورد أساسي لسلسلة متاجرنا في المنطقة.",
+                name: "عبدالله الشمري",
+                role: "صاحب سلسلة متاجر",
+                company: "العود الفاخر",
+                img: "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=100&h=100&q=80"
               },
               {
-                quote: "سرعة التوريد والاحترافية في التعامل جعلت من عود برستيج الشريك الأفضل لنا في المناسبات الكبرى.",
-                name: "سارة العتيبي",
-                role: "رئيسة العمليات",
-                company: "مجموعة التراث الخليجي",
-                img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80"
+                quote: "سرعة التوريد والاحترافية جعلت من مورد الطيب الشريك الأفضل لنا في توريد هدايا المناسبات والمؤتمرات.",
+                name: "فهد الدوسري",
+                role: "مسؤول مشتريات",
+                company: "مجموعة وطنية كبرى",
+                img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=100&h=100&q=80"
               },
               {
-                quote: "دهن العود لديهم يتميز بنقاء عالٍ وثبات مذهل، نال إعجاب عملائنا الأكثر تطلباً.",
-                name: "محمد القحطاني",
-                role: "المدير التنفيذي",
-                company: "دار الطيب والعود",
-                img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&h=100&q=80"
+                quote: "دهن العود لديهم يتميز بنقاء عالٍ، والأسعار تمنحنا هامش ربح ممتاز جداً كبائعين بالجملة.",
+                name: "سلطان العتيبي",
+                role: "تاجر جملة",
+                company: "قصر الطيب",
+                img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&h=100&q=80"
               }
             ].map((testimonial, i) => (
               <motion.div 
@@ -367,10 +368,10 @@ export default function App() {
           <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 gold-gradient rounded-xl flex items-center justify-center text-white font-serif text-3xl font-bold shadow-lg shadow-gold/20 border border-white/20">ع</div>
+                <Logo className="w-12 h-12" />
                 <div className="flex flex-col">
-                  <span className="text-xl font-serif font-bold tracking-tight leading-none">عود برستيج</span>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">OUD PRESTIGE B2B</span>
+                  <span className="text-xl font-serif font-bold tracking-tight leading-none">مورد الطيب</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">MAWRID AL TEEB WHOLESALE</span>
                 </div>
               </div>
               <p className="text-gray-400 max-w-sm leading-relaxed">
@@ -390,13 +391,13 @@ export default function App() {
               <h4 className="font-bold mb-6 uppercase tracking-widest text-sm text-gold">تواصل معنا</h4>
               <ul className="space-y-4 text-gray-400 text-sm">
                 <li>الرياض، المملكة العربية السعودية</li>
-                <li>info@oudprestige.com</li>
-                <li dir="ltr">+966 500 000 000</li>
+                <li>info@mawridteeb.sa</li>
+                <li dir="ltr">0598793333</li>
               </ul>
             </div>
           </div>
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-bold uppercase tracking-widest">
-            <p>© 2026 عود برستيج. جميع الحقوق محفوظة.</p>
+            <p>© 2026 مورد الطيب. جميع الحقوق محفوظة.</p>
             <div className="flex gap-8">
               <a href="#privacy" className="hover:text-white">سياسة الخصوصية</a>
               <a href="#terms" className="hover:text-white">الشروط والأحكام</a>
